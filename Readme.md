@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Екатерина Илларионова](https://up.htmlacademy.ru/javascript/28/user/2234315).
-* Наставник: `Неизвестно`.
+- Студент: [Екатерина Илларионова](https://up.htmlacademy.ru/javascript/28/user/2234315).
+- Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
