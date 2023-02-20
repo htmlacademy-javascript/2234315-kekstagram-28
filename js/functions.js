@@ -39,19 +39,12 @@ getNumber(2023);
 getNumber(-1);
 getNumber(1.5);
 
-function getFileName(text, length, fillSymbol) {
-  if(text.length < length){
-    const size = length - text.length;
-    let fillText = '';
-    let symbol = 0;
-    for(let j = 0; j < size; j++){
-      if(symbol === fillSymbol.length) {
-        symbol = 0 ;
-      }
-      fillText += fillSymbol.at(symbol);
-      symbol++;
-    }
-    return fillText + text;
+function getFileName(text, length, beforeText) {
+  if (text.length < length) {
+    const fillTextSize = length - text.length;
+    const extraFillTextSize = fillTextSize % beforeText.length;
+    const fillTextRepeat = Math.floor(fillTextSize / beforeText.length);
+    return beforeText.slice(0, extraFillTextSize) + beforeText.repeat(fillTextRepeat) + text;
   }
   return text;
 }
