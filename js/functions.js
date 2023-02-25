@@ -1,34 +1,32 @@
-function checkCommentLength(comment, length) {
-  if (comment.length <= length) {
-    return true;
-  }
-  return false;
-}
+const checkCommentLength = (comment, length) => comment.length <= length;
 
 checkCommentLength('проверяемая строка', 20);
 checkCommentLength('проверяемая строка', 18);
 checkCommentLength('проверяемая строка', 10);
 
-function checkPalindromm(palindrom) {
-  palindrom = palindrom.toLowerCase().replaceAll(' ', '');
-  for (let i = 0; i < palindrom.length / 2; i++) {
-    if (palindrom.at(i) !== palindrom.at(-1 - i)) {
+const checkPalindromm = (string) => {
+  const formattedString = string.toLowerCase().replaceAll(/\s+/g, '');
+
+  for (let i = 0; i < formattedString.length / 2; i++) {
+    if (formattedString.at(i) !== formattedString.at(-1 - i)) {
       return false;
     }
   }
+
   return true;
-}
+};
 
 checkPalindromm('топот');
 checkPalindromm('ДовОд');
 checkPalindromm('Кекс');
 checkPalindromm('Лёша на полке клопа нашёл ');
 
-function getNumber(message) {
+const getNumber = (message) => {
   message = String(message).replaceAll(/[^\d]/g, '');
   const number = parseInt(message, 10);
+
   return number;
-}
+};
 
 getNumber('2023 год');
 getNumber('ECMAScript 2022');
@@ -39,15 +37,18 @@ getNumber(2023);
 getNumber(-1);
 getNumber(1.5);
 
-function getFileName(text, length, beforeText) {
-  if (text.length < length) {
-    const fillTextSize = length - text.length;
-    const extraFillTextSize = fillTextSize % beforeText.length;
-    const fillTextRepeat = Math.floor(fillTextSize / beforeText.length);
-    return beforeText.slice(0, extraFillTextSize) + beforeText.repeat(fillTextRepeat) + text;
+const getFileName = (text, length, beforeText) => {
+
+  if (text.length >= length) {
+    return text;
   }
-  return text;
-}
+
+  const fillTextSize = length - text.length;
+  const extraFillTextSize = fillTextSize % beforeText.length;
+  const fillTextRepeat = Math.floor(fillTextSize / beforeText.length);
+
+  return beforeText.slice(0, extraFillTextSize) + beforeText.repeat(fillTextRepeat) + text;
+};
 
 getFileName('1', 2, '0');
 getFileName('1', 4, '0');
