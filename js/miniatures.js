@@ -1,22 +1,21 @@
-import {createPhotos} from './data.js';
-
-const MAX_PHOTO_COUNT = 25;
-
-const otherPicturesList = document.querySelector('.pictures');
-const otherPicturesTemplate = document.querySelector('#picture')
+const usersPicturesList = document.querySelector('.pictures');
+const usersPicturesTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
-const otherPictures = createPhotos(MAX_PHOTO_COUNT);
-const otherPicturesFragment = document.createDocumentFragment();
+const fragment = document.createDocumentFragment();
 
-otherPictures.forEach(({url, comments, likes}) => {
-  const otherPicture = otherPicturesTemplate.cloneNode(true);
+const createUsersPictures = (usersPictures) => {
+  usersPictures.forEach(({url, comments, likes}) => {
+    const usersPicture = usersPicturesTemplate.cloneNode(true);
 
-  otherPicture.querySelector('.picture__img').src = url;
-  otherPicture.querySelector('.picture__comments').textContent = comments.length;
-  otherPicture.querySelector('.picture__likes').textContent = likes;
+    usersPicture.querySelector('.picture__img').src = url;
+    usersPicture.querySelector('.picture__comments').textContent = comments.length;
+    usersPicture.querySelector('.picture__likes').textContent = likes;
 
-  otherPicturesFragment.appendChild(otherPicture);
-});
+    fragment.appendChild(usersPicture);
+  });
 
-otherPicturesList.appendChild(otherPicturesFragment);
+  usersPicturesList.appendChild(fragment);
+};
+
+export {createUsersPictures};
