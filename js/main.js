@@ -7,13 +7,14 @@ const usersPictures = createPhotos(MAX_PHOTO_COUNT);
 createUsersPictures(usersPictures);
 
 const modalElement = document.querySelector('.big-picture');
-const userPicturesContainer = document.querySelector('.pictures');
+const usersPicturesContainer = document.querySelector('.pictures');
 const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
 
-userPicturesContainer.addEventListener('click', (evt) => {
-  if (evt.target.closest('.picture')) {
-    const thisPhoto = usersPictures.find((item) => item.id.toString() === evt.target.closest('.picture').dataset.id);
-    openModal(thisPhoto);
+usersPicturesContainer.addEventListener('click', (evt) => {
+  const picture = evt.target.closest('.picture');
+  if (picture) {
+    const currentPicture = usersPictures.find((item) => item.id === +picture.dataset.id);
+    openModal(currentPicture);
   }
 });
 
