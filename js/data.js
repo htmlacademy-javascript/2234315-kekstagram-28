@@ -49,7 +49,7 @@ const createComments = () => {
 const createPhoto = (count) => ({
   id: count,
   url: `photos/${count}.jpg`,
-  description: 'Lorem ipsum dolor sit amet',
+  description: 'Привет, мир!',
   likes: getRandomInteger(MIN_LIKE_COUNT, MAX_LIKE_COUNT),
   comments: createComments(),
 });
