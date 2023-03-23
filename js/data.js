@@ -23,7 +23,7 @@ const COMMENTS = [
 
 const MIN_LIKE_COUNT = 15;
 const MAX_LIKE_COUNT = 200;
-const MAX_COMMENT_COUNT = 7;
+const MAX_COMMENT_COUNT = 13;
 const MAX_AVATAR_COUNT = 6;
 
 const generateCommentId = createtId();
@@ -49,7 +49,7 @@ const createComments = () => {
 const createPhoto = (count) => ({
   id: count,
   url: `photos/${count}.jpg`,
-  description: 'Lorem ipsum dolor sit amet',
+  description: 'Привет, мир!',
   likes: getRandomInteger(MIN_LIKE_COUNT, MAX_LIKE_COUNT),
   comments: createComments(),
 });
