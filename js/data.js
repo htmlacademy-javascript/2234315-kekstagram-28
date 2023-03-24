@@ -23,7 +23,7 @@ const COMMENTS = [
 
 const MIN_LIKE_COUNT = 15;
 const MAX_LIKE_COUNT = 200;
-const MAX_COMMENT_COUNT = 13;
+const MAX_COMMENT_COUNT = 17;
 const MAX_AVATAR_COUNT = 6;
 
 const generateCommentId = createtId();

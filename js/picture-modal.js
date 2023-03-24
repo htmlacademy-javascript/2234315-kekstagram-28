@@ -6,6 +6,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('.social__comment');
 const modalPicture = modalElement.querySelector('.big-picture__img img');
+const COMMENT_COUNT = 5;
 
 const renderPhoto = ({url, comments, likes, description}) => {
   modalPicture.src = url;
@@ -21,6 +22,7 @@ const renderComments = (comments) => {
   comments.forEach(({avatar, message, name}) => {
     const comment = commentTemplate.cloneNode(true);
 
+    comment.classList.add('hidden');
     comment.querySelector('.social__picture').src = avatar;
     comment.querySelector('.social__picture').alt = name;
     comment.querySelector('.social__text').textContent = message;
@@ -31,6 +33,27 @@ const renderComments = (comments) => {
   commentsList.appendChild(fragment);
 };
 
+const showComments = () => {
+  const comments = commentsList.children;
+  const lowerCount = +socialCommentCount.dataset.commentCount;
+  const maxCommentCount = +socialCommentCount.dataset.maxCommentCount;
+  let upperCount = lowerCount + COMMENT_COUNT;
+
+  if (upperCount >= maxCommentCount) {
+    upperCount = maxCommentCount;
+    commentsLoader.classList.add('hidden');
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+
+  for (let i = lowerCount; i < upperCount; i++) {
+    comments[i].classList.remove('hidden');
+  }
+
+  socialCommentCount.dataset.commentCount = upperCount;
+  socialCommentCount.innerHTML = `${upperCount} из <span class="comments-count">${maxCommentCount}</span> комментариев`;
+};
+
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -38,24 +61,30 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onCommentsLoaderClick = () => {
+  showComments();
+};
+
 const openModal = (photo) => {
   modalElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
 
   renderPhoto(photo);
   renderComments(photo.comments);
 
+  socialCommentCount.dataset.commentCount = 0;
+  socialCommentCount.dataset.maxCommentCount = photo.comments.length;
+  showComments();
+
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
 function closeModal () {
   modalElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  socialCommentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
 
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
