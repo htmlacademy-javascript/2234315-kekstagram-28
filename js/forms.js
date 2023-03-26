@@ -1,5 +1,3 @@
-const HASHTAG_MIN_LENGTH = 2;
-const HASHTAG_MAX_LENGTH = 20;
 const HASHTAG_COUNT = 5;
 const loadingForm = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
@@ -14,20 +12,12 @@ const pristine = new Pristine(loadingForm, {
 
 const checkHashtagCount = (value) => value.trim().split(/\s+/g).length <= HASHTAG_COUNT;
 
-const checkHashtagLength = (value) => {
-  if (value === '') {
-    return true;
-  }
-
-  return value.trim().split(/\s+/g).every((item) => item.length >= HASHTAG_MIN_LENGTH && item.length <= HASHTAG_MAX_LENGTH);
-};
-
 const checkHashtagSymbols = (value) => {
   if (value === '') {
     return true;
   }
 
-  return value.trim().split(/\s+/g).every((item) => /^#[a-zа-яё0-9]+$/i.test(item));
+  return value.trim().split(/\s+/g).every((item) => /^#[a-zа-яё0-9]{1,19}$/i.test(item));
 };
 
 const checkHashtagRepeat = (value) => {
@@ -37,8 +27,7 @@ const checkHashtagRepeat = (value) => {
 
 const errorMessages = new Map();
 errorMessages.set(checkHashtagCount, `Количество хэштегов не должно быть больше ${HASHTAG_COUNT}.`)
-  .set(checkHashtagLength, `Хэштег должен быть от ${HASHTAG_MIN_LENGTH} до ${HASHTAG_MAX_LENGTH} символов.`)
-  .set(checkHashtagSymbols, 'Хэштег должен начинаться с символа # и содержать только буквы и цифры.')
+  .set(checkHashtagSymbols, 'Хэштег должен начинаться с символа # и состоять только из букв и цифр, количество символов в хэштеге от 2 до 20.')
   .set(checkHashtagRepeat, 'Хэштеги не должны повторяться.');
 
 errorMessages.forEach((value, key) =>
