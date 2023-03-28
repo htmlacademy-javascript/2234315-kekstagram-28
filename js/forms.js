@@ -1,8 +1,12 @@
 const HASHTAG_COUNT = 5;
+const HASHTAG_MIN_LENGTH = 1;
+const HASHTAG_MAX_LENGTH = 20;
+
 const loadingForm = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
 const formInputs = document.querySelectorAll('.img-upload__field-wrapper');
 const formSubmitBtn = document.querySelector('.img-upload__submit');
+const hashtagRegexp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const pristine = new Pristine(loadingForm, {
   classTo: 'img-upload__field-wrapper',
@@ -17,7 +21,7 @@ const checkHashtagSymbols = (value) => {
     return true;
   }
 
-  return value.trim().split(/\s+/g).every((item) => /^#[a-zа-яё0-9]{1,19}$/i.test(item));
+  return value.trim().split(/\s+/g).every((item) => hashtagRegexp.test(item));
 };
 
 const checkHashtagRepeat = (value) => {
@@ -25,43 +29,28 @@ const checkHashtagRepeat = (value) => {
   return hashtags.length === new Set(hashtags).size;
 };
 
-const errorMessages = new Map();
-errorMessages.set(checkHashtagCount, `Количество хэштегов не должно быть больше ${HASHTAG_COUNT}.`)
-  .set(checkHashtagSymbols, 'Хэштег должен начинаться с символа # и состоять только из букв и цифр, количество символов в хэштеге от 2 до 20.')
-  .set(checkHashtagRepeat, 'Хэштеги не должны повторяться.');
+const addValidators = () => {
+  const validatioRules = new Map();
 
-errorMessages.forEach((value, key) =>
-  pristine.addValidator(
-    hashtagInput,
-    key,
-    value
-  )
-);
+  validatioRules
+    .set(checkHashtagCount, `Количество хэштегов не должно быть больше ${HASHTAG_COUNT}.`)
+    .set(checkHashtagSymbols, `Хэштег должен начинаться с символа # и состоять только из букв и цифр, количество символов в хэштеге от ${HASHTAG_MIN_LENGTH} до ${HASHTAG_MAX_LENGTH}.`)
+    .set(checkHashtagRepeat, 'Хэштеги не должны повторяться.');
 
-const observer = new MutationObserver(() => {
-  let isHasError = false;
+  validatioRules.forEach((errorMessage, validateFn) =>
+    pristine.addValidator(hashtagInput, validateFn, errorMessage, 1, true)
+  );
+};
 
-  formInputs.forEach((item) => {
-    if (item.classList.contains('has-danger')) {
-      isHasError = true;
-    }
-  });
-
-  if (isHasError) {
-    formSubmitBtn.setAttribute('disabled', '');
-  } else {
-    formSubmitBtn.removeAttribute('disabled');
-  }
-
-});
-
-formInputs.forEach((item) =>
-  observer.observe(item, {
-    attributes: true,
-  })
-);
+const onFormInput = () => {
+  const hasError = Array.from(formInputs).some((item) => item.classList.contains('has-danger'));
+  formSubmitBtn.disabled = hasError;
+};
 
 const validateForm = () => {
+  addValidators();
+
+  loadingForm.addEventListener('input', onFormInput);
   loadingForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
