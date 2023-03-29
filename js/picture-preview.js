@@ -17,11 +17,11 @@ const onPicturesContainerClick = (evt, pictures) => {
   }
 };
 
-const initPreview = (usersPictures) => {
+const initPicturePreview = (usersPictures) => {
   modalCloseElement.addEventListener('click', () => closeModal());
   usersPicturesContainer.addEventListener('click',
     (evt) => onPicturesContainerClick(evt, usersPictures)
   );
 };
 
-export {initPreview};
+export {initPicturePreview};

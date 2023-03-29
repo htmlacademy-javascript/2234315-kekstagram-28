@@ -1,12 +1,12 @@
 import {isEscapeKey} from './util.js';
 
+const COMMENT_COUNT = 5;
 const modalElement = document.querySelector('.big-picture');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('.social__comment');
 const modalPicture = modalElement.querySelector('.big-picture__img img');
-const COMMENT_COUNT = 5;
 
 const renderPhoto = ({url, comments, likes, description}) => {
   modalPicture.src = url;

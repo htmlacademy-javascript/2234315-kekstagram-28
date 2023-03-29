@@ -730,12 +730,12 @@ main {
   border-radius: 4px;
 }
 
-.img-upload__submit:hover,
-.img-upload__submit:focus {
+.img-upload__submit:hover:not(:disabled),
+.img-upload__submit:focus:not(:disabled) {
   background-color: rgba(255, 231, 82, 0.4);
 }
 
-.img-upload__submit:active {
+.img-upload__submit:active:not(:disabled) {
   -webkit-transform: translateY(1px);
       -ms-transform: translateY(1px);
           transform: translateY(1px);
@@ -1407,4 +1407,22 @@ main {
 
 .hidden {
   display: none;
+}
+
+.pristine-error {
+  display: block;
+  max-width: 450px;
+  margin: 5px auto 0;
+  color: #fe4d4c;
+  text-transform: none;
+}
+
+.img-upload__field-wrapper:not(:last-child).has-danger {
+  margin-bottom: 20px;
+}
+
+.img-upload__field-wrapper.has-danger input,
+.img-upload__field-wrapper.has-danger textarea {
+  margin-bottom: 0;
+  background-color: #ffadad;
 }
