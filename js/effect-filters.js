@@ -101,7 +101,7 @@ const onEffectsContainerClick = (evt) => {
 
 const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();
-  
+
   if (isDefault()) {
     picturePreview.style.filter = FILTER_PARAMS[0].style;
   } else {

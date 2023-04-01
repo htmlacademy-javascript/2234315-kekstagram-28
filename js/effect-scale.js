@@ -31,7 +31,7 @@ const increaseImage = () => {
   if (increasedValue > MAX_SCALE_VALUE) {
     increasedValue = MAX_SCALE_VALUE;
   }
-  
+
   scaleImage(increasedValue);
 };
 
