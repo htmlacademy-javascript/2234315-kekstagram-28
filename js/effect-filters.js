@@ -1,53 +1,47 @@
-const FILTER_PARAMS = [
-  {
-    name: 'none',
+const FILTER_PARAMS = {
+  none: {
     style: 'none',
     min: 0,
     max: 100,
     step: 1,
     unit: ''
   },
-  {
-    name: 'chrome',
+  chrome: {
     style: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'sepia',
+  sepia: {
     style: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'marvin',
+  marvin: {
     style: 'invert',
     min: 0,
     max: 100,
     step: 1,
     unit: '%'
   },
-  {
-    name: 'heat',
+  heat: {
     style: 'brightness',
     min: 1,
     max: 3,
     step: 0.1,
     unit: ''
   },
-  {
-    name: 'phobos',
+  phobos: {
     style: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     unit: 'px'
   }
-];
+};
 
 const sliderElement = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
@@ -55,7 +49,7 @@ const picturePreview = document.querySelector('.img-upload__preview img');
 const effectValue = document.querySelector('.effect-level__value');
 const effectsContainer = document.querySelector('.effects__list');
 
-let currentEffect = FILTER_PARAMS[0];
+let currentEffect = FILTER_PARAMS.none;
 
 const showSlider = () => {
   sliderContainer.classList.remove('hidden');
@@ -65,7 +59,7 @@ const hideSlider = () => {
   sliderContainer.classList.add('hidden');
 };
 
-const isDefault = () => currentEffect === FILTER_PARAMS[0];
+const isDefault = () => currentEffect === FILTER_PARAMS.none;
 
 const updateSlider = () => {
   sliderElement.noUiSlider.updateOptions({
@@ -84,17 +78,11 @@ const updateSlider = () => {
   }
 };
 
-const onEffectsContainerClick = (evt) => {
-  const effectControl = evt.target.classList.contains('effects__radio');
-  if (!effectControl) {
-    return;
-  }
-
-  currentEffect = FILTER_PARAMS.find((effect) => effect.name === evt.target.value);
+const onEffectsContainerChange = (evt) => {
+  currentEffect = FILTER_PARAMS[evt.target.value];
 
   if (currentEffect) {
     picturePreview.classname = `effects__preview--${currentEffect.name}`;
-
     updateSlider();
   }
 };
@@ -103,7 +91,7 @@ const onSliderUpdate = () => {
   const sliderValue = sliderElement.noUiSlider.get();
 
   if (isDefault()) {
-    picturePreview.style.filter = FILTER_PARAMS[0].style;
+    picturePreview.style.filter = FILTER_PARAMS.none.style;
   } else {
     picturePreview.style.filter = `${currentEffect.style}(${sliderValue}${currentEffect.unit})`;
   }
@@ -124,15 +112,15 @@ noUiSlider.create(sliderElement, {
 hideSlider();
 
 const setFilters = () => {
-  effectsContainer.addEventListener('change', onEffectsContainerClick);
+  effectsContainer.addEventListener('change', onEffectsContainerChange);
   sliderElement.noUiSlider.on('update', onSliderUpdate);
 };
 
 const resetFilters = () => {
-  currentEffect = FILTER_PARAMS[0];
+  currentEffect = FILTER_PARAMS.none;
   updateSlider();
 
-  effectsContainer.removeEventListener('change', onEffectsContainerClick);
+  effectsContainer.removeEventListener('change', onEffectsContainerChange);
   sliderElement.noUiSlider.off('update', onSliderUpdate);
 };
 
