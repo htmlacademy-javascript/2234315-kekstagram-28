@@ -20,4 +20,22 @@ const createtId = () => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getRandomArrayElement, createtId, isEscapeKey};
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'fixed';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.textTransform = 'none';
+  alertContainer.style.color = '#ffffff';
+  alertContainer.style.backgroundColor = '#fe4d4c';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+};
+
+export {getRandomInteger, getRandomArrayElement, createtId, isEscapeKey, showAlert};

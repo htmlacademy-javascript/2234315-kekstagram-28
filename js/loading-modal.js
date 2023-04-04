@@ -2,6 +2,7 @@ import {isEscapeKey} from './util.js';
 import {validateForm, resetFormErrors} from './forms.js';
 import {initScale, resetScale} from './effect-scale.js';
 import {setFilters, resetFilters} from './effect-filters.js';
+import {showSuccessMessage,showErrorMessage} from './messages.js';
 
 const loadingForm = document.querySelector('.img-upload__form');
 const modalElement = document.querySelector('.img-upload__overlay');
@@ -11,7 +12,7 @@ const descriptionInput = document.querySelector('.text__description');
 const isInputsFocused = () => hashtagInput === document.activeElement || descriptionInput === document.activeElement;
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && !isInputsFocused()) {
+  if (isEscapeKey(evt) && !isInputsFocused() && !document.body.classList.contains('has-message')) {
     evt.preventDefault();
     closeModal();
   }
@@ -23,7 +24,7 @@ const openModal = () => {
 
   initScale();
   setFilters();
-  validateForm();
+  validateForm(showSuccessMessage,showErrorMessage);
 
   document.addEventListener('keydown', onDocumentKeydown);
 };
