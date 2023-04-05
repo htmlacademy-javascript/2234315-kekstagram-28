@@ -1,12 +1,18 @@
+import {sendData} from './api.js';
+
 const HASHTAG_COUNT = 5;
 const HASHTAG_MIN_LENGTH = 1;
 const HASHTAG_MAX_LENGTH = 20;
 
 const loadingForm = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
-const formInputs = document.querySelectorAll('.img-upload__field-wrapper');
 const formSubmitBtn = document.querySelector('.img-upload__submit');
 const hashtagRegexp = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const SubmitButtonText = {
+  SENT: 'Опубликовать',
+  SENDING: 'Отправляю...'
+};
 
 const pristine = new Pristine(loadingForm, {
   classTo: 'img-upload__field-wrapper',
@@ -42,22 +48,30 @@ const addValidators = () => {
   );
 };
 
-const onFormInput = () => {
-  const hasError = Array.from(formInputs).some((item) => item.classList.contains('has-danger'));
-  formSubmitBtn.disabled = hasError;
+const blockSubmitButton = () => {
+  formSubmitBtn.disabled = true;
+  formSubmitBtn.textContent = SubmitButtonText.SENDING;
 };
 
-const validateForm = () => {
+const unblockSubmitButton = () => {
+  formSubmitBtn.disabled = false;
+  formSubmitBtn.textContent = SubmitButtonText.SENT;
+};
+
+const validateForm = (onSuccess,onError) => {
   addValidators();
 
-  loadingForm.addEventListener('input', onFormInput);
   loadingForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
 
     if (isValid) {
-      loadingForm.submit();
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(onError)
+        .finally(unblockSubmitButton);
     }
   });
 };
