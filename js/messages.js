@@ -1,10 +1,10 @@
 import {isEscapeKey} from './util.js';
 
-const successMesssageTemplate = document.querySelector('#success')
+const successMessageTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
 
-const errorMesssageTemplate = document.querySelector('#error')
+const errorMessageTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
 
@@ -29,6 +29,7 @@ const showMessage = (template) => {
   document.body.append(message);
   document.body.classList.add('has-message');
   document.addEventListener('keydown', onDocumentKeydown);
+
   message.addEventListener('click', (evt) => {
     if (evt.target !== messageInner && evt.target !== messageTitle) {
       hideMessage();
@@ -36,7 +37,7 @@ const showMessage = (template) => {
   });
 };
 
-const showSuccessMessage = () => showMessage(successMesssageTemplate);
-const showErrorMessage = () => showMessage(errorMesssageTemplate);
+const showSuccessMessage = () => showMessage(successMessageTemplate);
+const showErrorMessage = () => showMessage(errorMessageTemplate);
 
 export {showSuccessMessage,showErrorMessage};
