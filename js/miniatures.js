@@ -4,7 +4,9 @@ const usersPicturesTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 const fragment = document.createDocumentFragment();
 
-const createUsersPictures = (usersPictures) => {
+const renderUsersPictures = (usersPictures) => {
+  usersPicturesList.querySelectorAll('.picture').forEach((element) => element.remove());
+
   usersPictures.forEach(({id, url, comments, likes}) => {
     const usersPicture = usersPicturesTemplate.cloneNode(true);
 
@@ -19,4 +21,4 @@ const createUsersPictures = (usersPictures) => {
   usersPicturesList.appendChild(fragment);
 };
 
-export {createUsersPictures};
+export {renderUsersPictures};
