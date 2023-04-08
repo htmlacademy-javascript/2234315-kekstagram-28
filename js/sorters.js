@@ -1,5 +1,5 @@
 import {renderUsersPictures} from './miniatures.js';
-import {debounce} from './util.js';
+import {debounce,shuffle} from './util.js';
 
 const RANDOM_PICTURE_COUNT = 10;
 
@@ -10,38 +10,34 @@ const Sorter = {
 };
 
 const pictureSorters = document.querySelector('.img-filters');
+const sorterButtons = document.querySelectorAll('.img-filters__button');
 
-let activeSorter = Sorter.DEFAULT;
-
-const sortRandom = () => Math.random() - 0.5;
-
-const sortPopular = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
-
-const getSorteredPictures = (pictures) => {
+const getSortFunction = (activeSorter) => {
   switch (activeSorter) {
     case Sorter.RANDOM:
-      return [...pictures].sort(sortRandom).slice(0, RANDOM_PICTURE_COUNT);
+      return (pictures) => shuffle([...pictures], RANDOM_PICTURE_COUNT);
     case Sorter.DISCUSSED:
-      return [...pictures].sort(sortPopular);
+      return (pictures) => [...pictures].sort((a, b) => b.comments.length - a.comments.length);
+    case Sorter.DEFAULT:
+      return (pictures) => pictures;
     default:
-      return [...pictures];
+      throw new Error(`Unknown sort type ${activeSorter}`);
   }
 };
 
 const setSorterListener = (data) => {
   pictureSorters.addEventListener('click', debounce(
     (evt) => {
-      if (!evt.target.classList.contains('img-filters__button')) {
+      if (!evt.target.classList.contains('img-filters__button') || evt.target.classList.contains('img-filters__button--active')) {
         return;
       }
 
-      const activeButton = evt.target;
+      sorterButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
+      evt.target.classList.add('img-filters__button--active');
 
-      pictureSorters.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-      activeButton.classList.add('img-filters__button--active');
-
-      activeSorter = activeButton.id;
-      renderUsersPictures(getSorteredPictures(data));
+      const activeSortFn = getSortFunction(evt.target.id);
+      const currentPhotos = activeSortFn(data);
+      renderUsersPictures(currentPhotos);
     }
   ));
 };
