@@ -1,8 +1,8 @@
 import {openModal, closeModal} from './picture-modal.js';
 
-const modalElement = document.querySelector('.big-picture');
+const pictureModal = document.querySelector('.big-picture');
 const usersPicturesContainer = document.querySelector('.pictures');
-const modalCloseElement = modalElement.querySelector('.big-picture__cancel');
+const modalCloseButton = pictureModal.querySelector('.big-picture__cancel');
 
 const onPicturesContainerClick = (evt, pictures) => {
   const picture = evt.target.closest('.picture');
@@ -18,7 +18,7 @@ const onPicturesContainerClick = (evt, pictures) => {
 };
 
 const initPicturePreview = (usersPictures) => {
-  modalCloseElement.addEventListener('click', () => closeModal());
+  modalCloseButton.addEventListener('click', () => closeModal());
   usersPicturesContainer.addEventListener('click',
     (evt) => onPicturesContainerClick(evt, usersPictures)
   );

@@ -4,12 +4,12 @@ const SCALE_STEP_VALUE = 25;
 const DEFAULT_SCALE_VALUE = 100;
 
 const scaleInput = document.querySelector('.scale__control--value');
-const decreasingScaleBtn = document.querySelector('.scale__control--smaller');
-const increasingScaleBtn = document.querySelector('.scale__control--bigger');
-const imageElement = document.querySelector('.img-upload__preview img');
+const decreasingScaleButton = document.querySelector('.scale__control--smaller');
+const increasingScaleButton = document.querySelector('.scale__control--bigger');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 const scaleImage = (value) => {
-  imageElement.style.transform = `scale(${value / 100})`;
+  imagePreview.style.transform = `scale(${value / 100})`;
   scaleInput.value = `${value}%`;
 };
 
@@ -36,15 +36,15 @@ const increaseImage = () => {
 };
 
 const initScale = () => {
-  decreasingScaleBtn.addEventListener('click', decreaseImage);
-  increasingScaleBtn.addEventListener('click', increaseImage);
+  decreasingScaleButton.addEventListener('click', decreaseImage);
+  increasingScaleButton.addEventListener('click', increaseImage);
 };
 
 const resetScale = () => {
   scaleImage(DEFAULT_SCALE_VALUE);
 
-  decreasingScaleBtn.removeEventListener('click', decreaseImage());
-  increasingScaleBtn.removeEventListener('click', increaseImage());
+  decreasingScaleButton.removeEventListener('click', decreaseImage());
+  increasingScaleButton.removeEventListener('click', increaseImage());
 };
 
 export {initScale, resetScale};

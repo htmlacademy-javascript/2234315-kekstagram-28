@@ -9,8 +9,12 @@ const Sorter = {
   DISCUSSED: 'filter-discussed',
 };
 
-const pictureSorters = document.querySelector('.img-filters');
+const container = document.querySelector('.pictures');
+const pictureSorter = document.querySelector('.img-filters');
 const sorterButtons = document.querySelectorAll('.img-filters__button');
+
+const deletePictures = () =>
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
 
 const getSortFunction = (activeSorter) => {
   switch (activeSorter) {
@@ -26,7 +30,7 @@ const getSortFunction = (activeSorter) => {
 };
 
 const setSorterListener = (data) => {
-  pictureSorters.addEventListener('click', debounce(
+  pictureSorter.addEventListener('click', debounce(
     (evt) => {
       if (!evt.target.classList.contains('img-filters__button') || evt.target.classList.contains('img-filters__button--active')) {
         return;
@@ -37,13 +41,15 @@ const setSorterListener = (data) => {
 
       const activeSortFn = getSortFunction(evt.target.id);
       const currentPhotos = activeSortFn(data);
+
+      deletePictures();
       renderUsersPictures(currentPhotos);
     }
   ));
 };
 
 const initSorters = (usersPictures) => {
-  pictureSorters.classList.remove('img-filters--inactive');
+  pictureSorter.classList.remove('img-filters--inactive');
   setSorterListener(usersPictures);
 };
 

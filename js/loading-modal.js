@@ -5,7 +5,7 @@ import {setFilters, resetFilters} from './effect-filters.js';
 import {showSuccessMessage,showErrorMessage} from './messages.js';
 
 const loadingForm = document.querySelector('.img-upload__form');
-const modalElement = document.querySelector('.img-upload__overlay');
+const loadingModal = document.querySelector('.img-upload__overlay');
 const hashtagInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 
@@ -19,7 +19,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 const openModal = () => {
-  modalElement.classList.remove('hidden');
+  loadingModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   initScale();
@@ -30,7 +30,7 @@ const openModal = () => {
 };
 
 function closeModal () {
-  modalElement.classList.add('hidden');
+  loadingModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
   loadingForm.reset();
