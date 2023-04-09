@@ -43,7 +43,7 @@ const FILTER_PARAMS = {
   }
 };
 
-const sliderElement = document.querySelector('.effect-level__slider');
+const slider = document.querySelector('.effect-level__slider');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const picturePreview = document.querySelector('.img-upload__preview img');
 const effectValue = document.querySelector('.effect-level__value');
@@ -62,7 +62,7 @@ const hideSlider = () => {
 const isDefault = () => currentEffect === FILTER_PARAMS.none;
 
 const updateSlider = () => {
-  sliderElement.noUiSlider.updateOptions({
+  slider.noUiSlider.updateOptions({
     range: {
       min: currentEffect.min,
       max: currentEffect.max
@@ -82,13 +82,13 @@ const onEffectsContainerChange = (evt) => {
   currentEffect = FILTER_PARAMS[evt.target.value];
 
   if (currentEffect) {
-    picturePreview.classname = `effects__preview--${currentEffect.name}`;
+    picturePreview.classname = `effects__preview--${evt.target.value}`;
     updateSlider();
   }
 };
 
 const onSliderUpdate = () => {
-  const sliderValue = sliderElement.noUiSlider.get();
+  const sliderValue = slider.noUiSlider.get();
 
   if (isDefault()) {
     picturePreview.style.filter = FILTER_PARAMS.none.style;
@@ -99,7 +99,7 @@ const onSliderUpdate = () => {
   effectValue.value = sliderValue;
 };
 
-noUiSlider.create(sliderElement, {
+noUiSlider.create(slider, {
   range: {
     min: currentEffect.min,
     max: currentEffect.max,
@@ -113,7 +113,7 @@ hideSlider();
 
 const setFilters = () => {
   effectsContainer.addEventListener('change', onEffectsContainerChange);
-  sliderElement.noUiSlider.on('update', onSliderUpdate);
+  slider.noUiSlider.on('update', onSliderUpdate);
 };
 
 const resetFilters = () => {
@@ -121,7 +121,7 @@ const resetFilters = () => {
   updateSlider();
 
   effectsContainer.removeEventListener('change', onEffectsContainerChange);
-  sliderElement.noUiSlider.off('update', onSliderUpdate);
+  slider.noUiSlider.off('update', onSliderUpdate);
 };
 
 export {setFilters, resetFilters};

@@ -6,7 +6,7 @@ const HASHTAG_MAX_LENGTH = 20;
 
 const loadingForm = document.querySelector('.img-upload__form');
 const hashtagInput = document.querySelector('.text__hashtags');
-const formSubmitBtn = document.querySelector('.img-upload__submit');
+const formSubmitButton = document.querySelector('.img-upload__submit');
 const hashtagRegexp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const SubmitButtonText = {
@@ -49,13 +49,13 @@ const addValidators = () => {
 };
 
 const blockSubmitButton = () => {
-  formSubmitBtn.disabled = true;
-  formSubmitBtn.textContent = SubmitButtonText.SENDING;
+  formSubmitButton.disabled = true;
+  formSubmitButton.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
-  formSubmitBtn.disabled = false;
-  formSubmitBtn.textContent = SubmitButtonText.SENT;
+  formSubmitButton.disabled = false;
+  formSubmitButton.textContent = SubmitButtonText.SENT;
 };
 
 const validateForm = (onSuccess,onError) => {

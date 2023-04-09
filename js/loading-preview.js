@@ -3,15 +3,15 @@ import {showErrorMessage} from './messages.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-const modalElement = document.querySelector('.img-upload__overlay');
-const modalOpenElement = document.querySelector('#upload-file');
-const modalCloseElement = modalElement.querySelector('.img-upload__cancel');
+const loadingModal = document.querySelector('.img-upload__overlay');
+const fileUploader = document.querySelector('#upload-file');
+const modalCloseButton = loadingModal.querySelector('.img-upload__cancel');
 const preview = document.querySelector('.img-upload__preview img');
-const filtersPreviews = document.querySelectorAll('.effects__preview');
+const filterPreviews = document.querySelectorAll('.effects__preview');
 
 const initLoadingPreview = () => {
-  modalOpenElement.addEventListener('change', () => {
-    const file = modalOpenElement.files[0];
+  fileUploader.addEventListener('change', () => {
+    const file = fileUploader.files[0];
     const fileName = file.name.toLowerCase();
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
@@ -23,13 +23,13 @@ const initLoadingPreview = () => {
 
     preview.src = URL.createObjectURL(file);
 
-    for (const filtersPreview of filtersPreviews) {
+    for (const filtersPreview of filterPreviews) {
       filtersPreview.style.backgroundImage = `url(${preview.src})`;
     }
     openModal();
   });
 
-  modalCloseElement.addEventListener('click', () => {
+  modalCloseButton.addEventListener('click', () => {
     closeModal();
   });
 };

@@ -1,18 +1,19 @@
 import {isEscapeKey} from './util.js';
 
 const COMMENT_COUNT = 5;
-const modalElement = document.querySelector('.big-picture');
+
+const pictureModal = document.querySelector('.big-picture');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentsList = document.querySelector('.social__comments');
 const commentTemplate = document.querySelector('.social__comment');
-const modalPicture = modalElement.querySelector('.big-picture__img img');
+const modalPicture = pictureModal.querySelector('.big-picture__img img');
 
 const renderPhoto = ({url, comments, likes, description}) => {
   modalPicture.src = url;
-  modalElement.querySelector('.likes-count').textContent = likes;
-  modalElement.querySelector('.comments-count').textContent = comments.length;
-  modalElement.querySelector('.social__caption').textContent = description;
+  pictureModal.querySelector('.likes-count').textContent = likes;
+  pictureModal.querySelector('.comments-count').textContent = comments.length;
+  pictureModal.querySelector('.social__caption').textContent = description;
 };
 
 const renderComments = (comments) => {
@@ -66,7 +67,7 @@ const onCommentsLoaderClick = () => {
 };
 
 const openModal = (photo) => {
-  modalElement.classList.remove('hidden');
+  pictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   renderPhoto(photo);
@@ -81,7 +82,7 @@ const openModal = (photo) => {
 };
 
 function closeModal () {
-  modalElement.classList.add('hidden');
+  pictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
