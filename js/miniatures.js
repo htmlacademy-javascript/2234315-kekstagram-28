@@ -4,8 +4,10 @@ const usersPicturesTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 const fragment = document.createDocumentFragment();
 
+const deletePictures = () => usersPicturesList.querySelectorAll('.picture').forEach((element) => element.remove());
+
 const renderUsersPictures = (usersPictures) => {
-  usersPicturesList.querySelectorAll('.picture').forEach((element) => element.remove());
+  deletePictures();
 
   usersPictures.forEach(({id, url, comments, likes}) => {
     const usersPicture = usersPicturesTemplate.cloneNode(true);
