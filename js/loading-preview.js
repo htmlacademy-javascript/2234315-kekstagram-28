@@ -1,5 +1,6 @@
 import {openModal, closeModal} from './loading-modal.js';
-import {showErrorMessage} from './messages.js';
+import {validateForm} from './forms.js';
+import {showSuccessMessage,showErrorMessage} from './messages.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -8,6 +9,11 @@ const fileUploader = document.querySelector('#upload-file');
 const modalCloseButton = loadingModal.querySelector('.img-upload__cancel');
 const preview = document.querySelector('.img-upload__preview img');
 const filterPreviews = document.querySelectorAll('.effects__preview');
+
+const showMessageWithoutModal = () => {
+  showSuccessMessage();
+  closeModal();
+};
 
 const initLoadingPreview = () => {
   fileUploader.addEventListener('change', () => {
@@ -28,6 +34,8 @@ const initLoadingPreview = () => {
     }
     openModal();
   });
+
+  validateForm(showMessageWithoutModal,showErrorMessage);
 
   modalCloseButton.addEventListener('click', () => {
     closeModal();

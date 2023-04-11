@@ -1,8 +1,7 @@
 import {isEscapeKey} from './util.js';
-import {validateForm, resetFormErrors} from './forms.js';
+import {resetFormErrors} from './forms.js';
 import {initScale, resetScale} from './effect-scale.js';
 import {setFilters, resetFilters} from './effect-filters.js';
-import {showSuccessMessage,showErrorMessage} from './messages.js';
 
 const loadingForm = document.querySelector('.img-upload__form');
 const loadingModal = document.querySelector('.img-upload__overlay');
@@ -24,7 +23,6 @@ const openModal = () => {
 
   initScale();
   setFilters();
-  validateForm(showSuccessMessage,showErrorMessage);
 
   document.addEventListener('keydown', onDocumentKeydown);
 };
